@@ -1,14 +1,20 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, RotateCcw } from 'lucide-react';
 import GameCanvas from './components/GameCanvas';
 import EvolutionList from './components/EvolutionList';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleReset = () => {
+    if (window.confirm('本当にリセットしますか？\n現在のスコアもリセットされます。')) {
+      window.location.reload();
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center p-2 md:p-4 gap-4 md:gap-8 overflow-hidden relative font-round">
-      <div className="flex-1 flex items-center justify-center w-full h-full overflow-hidden">
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-start md:justify-center p-2 md:p-4 gap-2 md:gap-8 overflow-hidden relative font-round pt-4 md:pt-0">
+      <div className="flex-initial flex items-center justify-center w-full overflow-hidden">
         <GameCanvas />
       </div>
       
@@ -17,13 +23,23 @@ function App() {
         <EvolutionList />
       </div>
 
-      {/* Mobile Toggle Button */}
-      <button 
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className="md:hidden fixed top-4 right-4 z-50 p-2 bg-slate-800 rounded-full border border-slate-600 text-white shadow-lg"
-      >
-        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      {/* Mobile Controls (Bottom Right) */}
+      <div className="md:hidden fixed bottom-6 right-6 z-50 flex gap-3">
+        <button 
+          onClick={handleReset}
+          className="p-3 bg-white/80 backdrop-blur-md rounded-full border-2 border-orange-200 text-orange-500 shadow-xl hover:bg-white transition-all active:scale-95"
+          title="リセット"
+        >
+          <RotateCcw size={24} />
+        </button>
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="p-3 bg-slate-800/90 backdrop-blur-md rounded-full border-2 border-slate-600 text-white shadow-xl hover:bg-slate-700 transition-all active:scale-95"
+          title="進化の系譜"
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
       {/* Mobile Drawer */}
       <div className={`

@@ -248,9 +248,9 @@ const GameCanvas: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-full overflow-hidden">
+    <div className="flex flex-col items-center gap-2 md:gap-4 w-full max-w-full overflow-hidden">
       <div 
-        className="text-slate-700 text-center bg-white/50 px-4 py-3 md:px-8 md:py-4 rounded-3xl shadow-sm backdrop-blur-sm border-2 border-white w-full max-w-[450px]"
+        className="text-slate-700 text-center bg-white/50 px-4 py-2 md:py-4 rounded-3xl shadow-sm backdrop-blur-sm border-2 border-white w-full max-w-[450px]"
         style={{ transform: `scale(${scale < 0.9 ? 0.9 : 1})`, transformOrigin: 'top' }}
       >
         <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-pink-500 tracking-widest drop-shadow-sm whitespace-nowrap">✨ キリスト・バトン ✨</h1>
