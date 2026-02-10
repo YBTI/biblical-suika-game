@@ -9,7 +9,7 @@ const GameCanvas: React.FC = () => {
   const [score, setScore] = useState(0);
   const [nextCharacter, setNextCharacter] = useState<Character>(CHARACTERS[0]);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [currentBg, setCurrentBg] = useState("url('/background/eden.png')"); // Default Eden
+  const [currentBg, setCurrentBg] = useState("linear-gradient(180deg, #e3ffe7 0%, #d9e7ff 100%)"); // Default Eden (Pastel Reversion)
 
   const containerWidth = 450;
   const containerHeight = 650;
@@ -25,7 +25,7 @@ const GameCanvas: React.FC = () => {
     if (level >= 10) return "url('/background/canaan.png')";
     if (level >= 7) return "url('/background/desert.png')";
     if (level >= 4) return "url('/background/egypt.png')";
-    return "url('/background/eden.png')";
+    return "linear-gradient(180deg, #e3ffe7 0%, #d9e7ff 100%)";
   };
 
   const updateBackground = () => {
