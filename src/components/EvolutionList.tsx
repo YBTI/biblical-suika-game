@@ -14,7 +14,7 @@ const EvolutionList: React.FC = () => {
             className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/60 transition-colors bg-white/30 shadow-sm"
           >
             <div 
-              className="flex-shrink-0 w-12 h-12 rounded-full border-2 border-white/20 overflow-hidden bg-slate-900"
+              className="flex-shrink-0 w-12 h-12 rounded-full border-4 shadow-sm overflow-hidden bg-slate-100"
               style={{ borderColor: char.color }}
             >
               <img 

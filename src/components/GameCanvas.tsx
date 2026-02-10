@@ -154,11 +154,18 @@ const GameCanvas: React.FC = () => {
             context.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
             context.restore();
             
-            // Optional: Add a subtle border
+            // Distinct colored border
             context.beginPath();
             context.arc(x, y, radius, 0, 2 * Math.PI);
-            context.lineWidth = 2;
-            context.strokeStyle = "#ffffff";
+            context.lineWidth = 6;
+            context.strokeStyle = character.color;
+            context.stroke();
+
+            // Inner thin white border for better contrast
+            context.beginPath();
+            context.arc(x, y, radius - 2, 0, 2 * Math.PI);
+            context.lineWidth = 1.5;
+            context.strokeStyle = "rgba(255, 255, 255, 0.8)";
             context.stroke();
           }
         }
@@ -261,11 +268,11 @@ const GameCanvas: React.FC = () => {
           <div className="flex items-center gap-2 md:gap-3 bg-blue-100 px-3 py-0.5 md:px-4 md:py-1 rounded-full border-2 border-blue-200">
             <span className="text-blue-600 font-bold text-xs md:text-sm">Next:</span>
             <div 
-              className="flex items-center justify-center bg-white rounded-full border-2 border-blue-200 overflow-hidden relative shadow-inner"
+              className="flex items-center justify-center bg-white rounded-full border-4 overflow-hidden relative shadow-md"
               style={{ 
-                width: nextCharacter.radius * 1.2 * 0.6, // Adjusted for mobile
-                height: nextCharacter.radius * 1.2 * 0.6,
-                backgroundColor: nextCharacter.color 
+                width: nextCharacter.radius * 1.5 * 0.6, 
+                height: nextCharacter.radius * 1.5 * 0.6,
+                borderColor: nextCharacter.color 
               }}
             >
               <img 
