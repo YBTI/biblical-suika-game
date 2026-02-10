@@ -178,7 +178,7 @@ const GameCanvas: React.FC = () => {
     if (isGameOver || !engineRef.current || !sceneRef.current) return;
 
     const rect = sceneRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+    const x = (e.clientX - rect.left) / scale;
     
     const safeX = Math.max(nextCharacter.radius, Math.min(containerWidth - nextCharacter.radius, x));
     
@@ -209,21 +209,45 @@ const GameCanvas: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const [scale, setScale] = useState(1);
+
+  // Responsive scaling
+  useEffect(() => {
+    const handleResize = () => {
+      const padding = 32; // Standard padding
+      const availableWidth = window.innerWidth - padding;
+      const availableHeight = window.innerHeight - 200; // Leave space for header
+      
+      const scaleX = availableWidth / containerWidth;
+      const scaleY = availableHeight / containerHeight;
+      const newScale = Math.min(1, scaleX, scaleY); // Don't scale up past original size
+      
+      setScale(newScale);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="text-slate-700 text-center bg-white/50 px-8 py-4 rounded-3xl shadow-sm backdrop-blur-sm border-2 border-white">
-        <h1 className="text-3xl font-bold mb-3 text-pink-500 tracking-widest drop-shadow-sm">✨ Biblical Suika ✨</h1>
-        <div className="flex gap-8 text-xl items-center justify-center">
-          <div className="bg-orange-100 px-4 py-1 rounded-full text-orange-600 font-bold border-2 border-orange-200">
-            Score: <span className="font-mono text-2xl ml-2">{score}</span>
+    <div className="flex flex-col items-center gap-4 w-full max-w-full overflow-hidden">
+      <div 
+        className="text-slate-700 text-center bg-white/50 px-4 py-3 md:px-8 md:py-4 rounded-3xl shadow-sm backdrop-blur-sm border-2 border-white w-full max-w-[450px]"
+        style={{ transform: `scale(${scale < 0.9 ? 0.9 : 1})`, transformOrigin: 'top' }}
+      >
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-pink-500 tracking-widest drop-shadow-sm whitespace-nowrap">✨ Biblical Suika ✨</h1>
+        <div className="flex gap-4 md:gap-8 text-lg md:text-xl items-center justify-center">
+          <div className="bg-orange-100 px-3 py-0.5 md:px-4 md:py-1 rounded-full text-orange-600 font-bold border-2 border-orange-200">
+            Score: <span className="font-mono text-xl md:text-2xl ml-1 md:ml-2">{score}</span>
           </div>
-          <div className="flex items-center gap-3 bg-blue-100 px-4 py-1 rounded-full border-2 border-blue-200">
-            <span className="text-blue-600 font-bold text-sm">Next:</span>
+          <div className="flex items-center gap-2 md:gap-3 bg-blue-100 px-3 py-0.5 md:px-4 md:py-1 rounded-full border-2 border-blue-200">
+            <span className="text-blue-600 font-bold text-xs md:text-sm">Next:</span>
             <div 
               className="flex items-center justify-center bg-white rounded-full border-2 border-blue-200 overflow-hidden relative shadow-inner"
               style={{ 
-                width: nextCharacter.radius * 2 * 0.6, // Scale down for preview
-                height: nextCharacter.radius * 2 * 0.6,
+                width: nextCharacter.radius * 1.2 * 0.6, // Adjusted for mobile
+                height: nextCharacter.radius * 1.2 * 0.6,
                 backgroundColor: nextCharacter.color 
               }}
             >
@@ -233,39 +257,43 @@ const GameCanvas: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="font-bold text-slate-600">{nextCharacter.name}</span>
+            <span className="font-bold text-slate-600 text-sm md:text-base">{nextCharacter.name}</span>
           </div>
         </div>
       </div>
       
-      <div 
-        ref={sceneRef} 
-        onClick={handleClick}
-        className="relative rounded-3xl shadow-xl border-4 border-white cursor-crosshair overflow-hidden backdrop-blur-sm transition-all duration-1000 ease-in-out"
-        style={{ 
-          width: containerWidth, 
-          height: containerHeight,
-          background: currentBg,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
+      <div className="relative flex items-center justify-center" style={{ width: containerWidth * scale, height: containerHeight * scale }}>
         <div 
-          className="absolute w-full border-t-4 border-pink-300 border-dashed opacity-60 pointer-events-none" 
-          style={{ top: deadlineHeight }}
-        ></div>
-        {isGameOver && (
-          <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center text-slate-700 z-10 backdrop-blur-sm">
-            <h2 className="text-5xl font-bold mb-2 text-pink-500 drop-shadow-sm">GAME OVER</h2>
-            <p className="text-xl mb-6 font-bold text-slate-500">Score: {score}</p>
-            <button 
-              onClick={() => window.location.reload()}
-              className="px-8 py-3 bg-gradient-to-r from-pink-400 to-orange-400 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform border-2 border-white text-xl"
-            >
-              もう一度遊ぶ 🔄
-            </button>
-          </div>
-        )}
+          ref={sceneRef} 
+          onClick={handleClick}
+          className="relative rounded-3xl shadow-xl border-4 border-white cursor-crosshair overflow-hidden backdrop-blur-sm transition-all duration-1000 ease-in-out origin-center"
+          style={{ 
+            width: containerWidth, 
+            height: containerHeight,
+            background: currentBg,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            transform: `scale(${scale})`,
+            position: 'absolute'
+          }}
+        >
+          <div 
+            className="absolute w-full border-t-4 border-pink-300 border-dashed opacity-60 pointer-events-none" 
+            style={{ top: deadlineHeight }}
+          ></div>
+          {isGameOver && (
+            <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center text-slate-700 z-10 backdrop-blur-sm">
+              <h2 className="text-4xl md:text-5xl font-bold mb-2 text-pink-500 drop-shadow-sm">GAME OVER</h2>
+              <p className="text-lg md:text-xl mb-6 font-bold text-slate-500">Score: {score}</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-6 py-2 md:px-8 md:py-3 bg-gradient-to-r from-pink-400 to-orange-400 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform border-2 border-white text-lg md:text-xl"
+              >
+                もう一度遊ぶ 🔄
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

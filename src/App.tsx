@@ -7,8 +7,10 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center p-4 gap-8 overflow-hidden relative font-round">
-      <GameCanvas />
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center p-2 md:p-4 gap-4 md:gap-8 overflow-hidden relative font-round">
+      <div className="flex-1 flex items-center justify-center w-full h-full overflow-hidden">
+        <GameCanvas />
+      </div>
       
       {/* Desktop View */}
       <div className="hidden md:block h-[650px]">
