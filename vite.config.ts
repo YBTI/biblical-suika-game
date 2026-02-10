@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'Biblical Suika Game',
-        short_name: 'Suika Bible',
+        name: 'キリスト・バトン',
+        short_name: 'キリスト・バトン',
         description: 'A biblical-themed physics puzzle game',
         theme_color: '#ffffff',
         icons: [

@@ -253,7 +253,7 @@ const GameCanvas: React.FC = () => {
         className="text-slate-700 text-center bg-white/50 px-4 py-3 md:px-8 md:py-4 rounded-3xl shadow-sm backdrop-blur-sm border-2 border-white w-full max-w-[450px]"
         style={{ transform: `scale(${scale < 0.9 ? 0.9 : 1})`, transformOrigin: 'top' }}
       >
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-pink-500 tracking-widest drop-shadow-sm whitespace-nowrap">✨ Biblical Suika ✨</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-pink-500 tracking-widest drop-shadow-sm whitespace-nowrap">✨ キリスト・バトン ✨</h1>
         <div className="flex gap-4 md:gap-8 text-lg md:text-xl items-center justify-center">
           <div className="bg-orange-100 px-3 py-0.5 md:px-4 md:py-1 rounded-full text-orange-600 font-bold border-2 border-orange-200">
             Score: <span className="font-mono text-xl md:text-2xl ml-1 md:ml-2">{score}</span>
