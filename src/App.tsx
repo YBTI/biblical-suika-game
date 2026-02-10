@@ -35,7 +35,7 @@ function App() {
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-3 bg-slate-800/90 backdrop-blur-md rounded-full border-2 border-slate-600 text-white shadow-xl hover:bg-slate-700 transition-all active:scale-95"
-          title="進化の系譜"
+          title="中心人物のバトン"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

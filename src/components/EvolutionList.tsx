@@ -5,7 +5,7 @@ const EvolutionList: React.FC = () => {
   return (
     <div className="h-full w-full md:w-64 bg-white/60 rounded-2xl shadow-xl border-2 border-white/80 flex flex-col overflow-hidden backdrop-blur-md">
       <div className="p-4 bg-white/50 border-b-2 border-white/50">
-        <h2 className="text-lg font-bold text-center text-pink-500 tracking-wider">☁️ 進化の系譜 ☁️</h2>
+        <h2 className="text-lg font-bold text-center text-pink-500 tracking-wider">☁️ 中心人物のバトン ☁️</h2>
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
         {CHARACTERS.map((char) => (
