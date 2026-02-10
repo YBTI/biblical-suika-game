@@ -86,9 +86,24 @@ const GameCanvas: React.FC = () => {
     renderRef.current = render;
 
     // Walls
-    const ground = Matter.Bodies.rectangle(containerWidth / 2, containerHeight + 30, containerWidth, 60, { isStatic: true, render: { fillStyle: '#e2e8f0' } });
-    const leftWall = Matter.Bodies.rectangle(-30, containerHeight / 2, 60, containerHeight, { isStatic: true, render: { fillStyle: '#e2e8f0' } });
-    const rightWall = Matter.Bodies.rectangle(containerWidth + 30, containerHeight / 2, 60, containerHeight, { isStatic: true, render: { fillStyle: '#e2e8f0' } });
+    const ground = Matter.Bodies.rectangle(containerWidth / 2, containerHeight + 30, containerWidth, 60, { 
+      isStatic: true, 
+      restitution: 0, 
+      friction: 0.8,
+      render: { fillStyle: '#e2e8f0' } 
+    });
+    const leftWall = Matter.Bodies.rectangle(-30, containerHeight / 2, 60, containerHeight, { 
+      isStatic: true, 
+      restitution: 0, 
+      friction: 0.8,
+      render: { fillStyle: '#e2e8f0' } 
+    });
+    const rightWall = Matter.Bodies.rectangle(containerWidth + 30, containerHeight / 2, 60, containerHeight, { 
+      isStatic: true, 
+      restitution: 0, 
+      friction: 0.8,
+      render: { fillStyle: '#e2e8f0' } 
+    });
 
     Matter.Composite.add(engine.world, [ground, leftWall, rightWall]);
 
@@ -164,8 +179,10 @@ const GameCanvas: React.FC = () => {
   const createCharacterBody = (x: number, y: number, character: Character) => {
     return Matter.Bodies.circle(x, y, character.radius, {
       label: `char-${character.level}`,
-      restitution: 0.3,
-      friction: 0.1,
+      restitution: 0.05, // Significant reduction in bounciness
+      friction: 0.5,     // More grip, less "slippery plastic" feel
+      frictionAir: 0.02, // Slight air damping for smoother movement
+      slop: 0.1,        // Allow a tiny bit of overlap for "squishy" feel
       render: {
         fillStyle: 'transparent',
         strokeStyle: 'transparent',
